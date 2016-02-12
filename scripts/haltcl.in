@@ -1,5 +1,5 @@
-#!@TCLSH@
-load @EMC2_TCL_LIB_DIR@/hal.so
+#!@TCL_TCLSH@
+load @PROJECT_LIB_DIR@/lib/hal.so
 
 proc parse_ini {filename} {
     set f [open $filename]
@@ -12,7 +12,7 @@ proc parse_ini {filename} {
             lappend s([string trim $k]) $v
         }
     }
-
+    
     close $f
 }
 
@@ -53,4 +53,3 @@ set filename [lindex $argv 0]
 set argv [lindex $argv 1 end]
 
 set result [source $filename]
-

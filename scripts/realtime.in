@@ -1,23 +1,15 @@
 #! /bin/bash
 #
-# @configure_input@ 
-# on @DATE@
-#
 
 # Basic variables
 export LANG=C
-prefix=@prefix@
-exec_prefix=@exec_prefix@
-RTAPI_INI=@EMC2_SYSTEM_CONFIG_DIR@/rtapi.ini
-INIVAR=@EMC2_LIBEXEC_DIR@/inivar
-LSMOD=@LSMOD@
+RTAPI_INI=@PROJECT_SYSCONF_DIR@/machinekit/rtapi.ini
+INIVAR=@PROJECT_LIBEXEC_DIR@/inivar
 PIDOF=@PIDOF@
-SHM_DEV=/dev/shmdrv
-SHM_STAT=/sys/devices/virtual/misc/shmdrv/status
 
 # if not overridden by user, point MACHINEKIT_INI to installed default:
 if [ -z "$MACHINEKIT_INI" ]; then
-    MACHINEKIT_INI=@EMC2_SYSTEM_CONFIG_DIR@/machinekit.ini
+    MACHINEKIT_INI=@PROJECT_SYSCONF_DIR@/machinekit/machinekit.ini
 fi
 export MACHINEKIT_INI
 
@@ -54,11 +46,9 @@ getvar() {
 getvar flavor
 getvar linuxcnc_module_helper
 getvar rtapi_msgd
-#getvar halcmd
 
 # Flavor configuration
 FLAVOR=$($flavor)
-BUILD_SYS=`${flavor} -b`
 getvar MODULES --flavor
 getvar rtapi_app --flavor
 
@@ -67,11 +57,6 @@ if ! test -u ${rtapi_app}
 then
     echo Warning - ${rtapi_app} not setuid >&2
     echo "'sudo make setuid' missing?" >&2
-fi
-
-# Other, overridable by environment variables
-if [ "$USE_SHMDRV" == "" ]  ; then
-    getvar USE_SHMDRV
 fi
 
 if [ "$HAL_SIZE" == "" ]  ; then
@@ -106,9 +91,6 @@ fi
 
 
 # Compute module lists
-#
-# kernel threads also need the rtapi and hal_lib kernel modules
-test $BUILD_SYS = kbuild && MODULES="$MODULES rtapi hal_lib"
 #
 # reverse list of modules for unloading
 MODULES_UNLOAD=
@@ -145,28 +127,6 @@ CheckStatus(){
 	fi
     done
 
-    if test $BUILD_SYS = kbuild; then
-        # check loaded/unloaded status of modules
-        for MOD in $MODULES_UNLOAD ; do
-            if $LSMOD | awk '{print $1}' | grep -x $MOD >/dev/null ; then
-                echo "$MOD loaded" >&2
-            else
-                echo "$MOD not loaded" >&2
-                res=1
-            fi
-        done
-    fi
-
-    # check if shmdrv is loaded, when applicable
-    if test $BUILD_SYS = 'kbuild' -o $USE_SHMDRV = yes; then
-	if CheckShm -l; then
-	    echo "shmdrv loaded" >&2
-	else
-	    echo "shmdrv not loaded" >&2
-	    res=1
-	fi
-    fi
-
     return $res
 }
 
@@ -195,43 +155,7 @@ Load(){
     # wait until rtapi_app responds, meaning setup is complete
     # this avoids startup races
     halcmd ping
-
-    if test BUILD_SYS = 'kbuild'; then
-	# help debugging startup issues for kthreads
-        if [ $DEBUG -gt 0 ] && [ -w /proc/rtapi/debug ] ; then
-            echo "$DEBUG" > /proc/rtapi/debug
-        fi
-    fi
 }
-
-CheckShm(){
-    # -l: return success if shmdrv device exists
-    # -w: wait for shmdrv to be loaded; return success if loaded
-
-    # Skip checks if shmdrv is not applicable
-    test $BUILD_SYS = 'user-dso' -a $USE_SHMDRV = no && return 0
-
-    case "$1" in
-	-l)
-	    # success if shmdrv device exists
-	    test -c $SHM_DEV; return ;;
-
-	-w)
-	    # wait for shmdrv to be loaded; this abomination is needed
-	    # because udev sometimes doesn't have the device ready for
-	    # us in time.
-	    n=0
-	    while [ $((n++)) -lt 100 ]; do
-		[ -w $SHM_DEV ] && return 0
-		sleep .1
-	    done
-
-	    # $SHM_DEV never became writable after ten seconds
-	    return 1;;
-    esac
-}
-
-
 
 RemoveModules(){
     # Remove a list of modules recursively
@@ -274,15 +198,8 @@ Unload(){
         fi
     fi
 
-    if test $USE_SHMDRV = no; then
-
-	    # remove any linuxcnc-specific POSIX shm segments if they exist
-	    # see src/rtapi/rtapi_shmkeys.h: SHM_FMT
-
 	INSTKEY=`printf 'linuxcnc-%d-' $INSTANCE`
 	rm  -f  /dev/shm/${INSTKEY}* >/dev/null 2>&1
-    fi
-
 
     # wait until rtapi_msgd has vanished. This assures
     # that the last user of the global data segment has vanished,
@@ -314,20 +231,6 @@ Unload(){
     fi
 
     RemoveModules $MODULES_UNLOAD
-
-    # unload shmdrv, if applicable
-    if test $BUILD_SYS = 'kbuild' -o $USE_SHMDRV = yes; then
-	if CheckShm -l; then
-	    # module is loaded; try to force unload, always return success
-	    if test $DEBUG -gt 1; then
-		echo "realtime unload: notice: attempting to unload shmdrv" >&2
-	    fi
-	    $linuxcnc_module_helper remove shmdrv 2>/dev/null || true
-	else
-	    echo -n "realtime unload: warning: " >&2
-	    echo "shmdrv expected to be loaded, but wasn't" 1>&2
-	fi
-    fi
 }
 
 CheckUnloaded(){
@@ -377,13 +280,6 @@ CheckUnloaded(){
     # checks to see if all modules were unloaded
 
     STATUS=
-    for module in $MODULES_UNLOAD ; do
-	# check to see if the module is installed
-	if $LSMOD | awk '{print $1}' | grep -x $module >/dev/null ; then
-	    echo "ERROR: Could not unload '$module'"
-	    STATUS=error
-	fi
-    done
     if [ -n "$STATUS" ] ; then
 	exit 1
     fi
@@ -411,12 +307,6 @@ case "$CMD" in
   unloadcheck)
 	CheckUnloaded
 	;;
-  # for script debugging
-  shmcheck)
-	if CheckShm -l; then
-	    echo "shmdrv loaded" >&2; exit 0
-	fi
-  	;;
   *)
 	echo "Usage: $0 {start|load|stop|unload|restart|force-reload|status}" >&2
 	exit 1
@@ -424,4 +314,3 @@ case "$CMD" in
 esac
 
 exit 0
-
