@@ -123,9 +123,9 @@ add_custom_target(setuid
     WORKING_DIRECTORY ${PROJECT_LIBEXEC_DIR}
     VERBATIM)
 
-install(FILES rsyslogd-linuxcnc.conf
+install(FILES rsyslogd-machinekit.conf
     DESTINATION ${INSTALL_SYSCONF_DIR}/rsyslog.d
-    RENAME linuxcnc.conf)
+    RENAME machinekit.conf)
 
 set(target-exec ${target-exec} rtapi_msgd flavor mk_rip)
 _install_exec("${target-exec}")

@@ -67,7 +67,7 @@
 #include <math.h> /* floorl */
 #include <czmq.h>
 
-const char *logpath = "/var/log/linuxcnc.log";
+const char *logpath = "/var/log/machinekit.log";
 
 static int unloadrt_comp(char *mod_name);
 static void print_comp_info(char **patterns);
@@ -4338,4 +4338,3 @@ static void print_help_commands(void)
     printf("  echo, unecho        Echo commands from stdin to stderr\n");
     printf("  quit, exit          Exit from halcmd\n");
 }
-
