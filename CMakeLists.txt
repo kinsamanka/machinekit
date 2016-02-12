@@ -1,0 +1,34 @@
+cmake_minimum_required(VERSION 2.8)
+
+project(Machinekit)
+set(Machinekit_VERSION_MAJOR 1)
+set(Machinekit_VERSION_MINOR 0)
+
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules")
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
+
+set(PROJECT_PYTHON_DIR ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/python)
+set(PROJECT_LIBEXEC_DIR ${PROJECT_BINARY_DIR}/lib/machinekit)
+set(PROJECT_LIB_DIR ${PROJECT_BINARY_DIR}/lib)
+set(PROJECT_SYSCONF_DIR ${PROJECT_BINARY_DIR}/etc)
+set(PROJECT_BIN_DIR ${PROJECT_BINARY_DIR}/bin)
+set(PROJECT_DATA_DIR ${PROJECT_BINARY_DIR}/share)
+set(PROJECT_LOCALE_DIR ${PROJECT_DATA_DIR}/locale)
+set(PROJECT_MAN_DIR ${PROJECT_BINARY_DIR}/man)
+set(PROTO_GEN_DIR ${PROJECT_BINARY_DIR}/generated)
+set(INCLUDE_DIR ${PROJECT_BINARY_DIR}/include)
+
+if("${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr")
+    set(INSTALL_SYSCONF_DIR "/etc")
+else()
+    set(INSTALL_SYSCONF_DIR "${CMAKE_INSTALL_PREFIX}/etc")
+endif()
+
+include(Dependencies)
+include(Options)
+include(Macros)
+
+add_subdirectory(src)
+add_subdirectory(scripts)

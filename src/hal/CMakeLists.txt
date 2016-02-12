@@ -1,0 +1,13 @@
+add_subdirectory(lib)
+add_subdirectory(components)
+add_subdirectory(utils)
+add_subdirectory(drivers)
+add_subdirectory(i_components)
+add_subdirectory(classicladder)
+add_subdirectory(vtable-example)
+add_subdirectory(userfunct-example)
+add_subdirectory(support)
+add_subdirectory(cython)
+
+_to_rtlib(icomp icomp-example/icomp.c)
+_install_exec(icomp)
