@@ -41,9 +41,9 @@
 
 #include "hal.h"
 
-#include "hostmot2.h"
-#include "hostmot2-lowlevel.h"
-#include "hm2_test.h"
+#include "drivers/mesa-hostmot2/hostmot2.h"
+#include "drivers/mesa-hostmot2/hostmot2-lowlevel.h"
+#include "drivers/mesa-hostmot2/hm2_test.h"
 
 
 MODULE_LICENSE("GPL");

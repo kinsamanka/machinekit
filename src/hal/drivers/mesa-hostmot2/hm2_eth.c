@@ -42,10 +42,10 @@
 
 #include "hal.h"
 
-#include "hostmot2-lowlevel.h"
-#include "hostmot2.h"
-#include "hm2_eth.h"
-#include "lbp16.h"
+#include "drivers/mesa-hostmot2/hostmot2-lowlevel.h"
+#include "drivers/mesa-hostmot2/hostmot2.h"
+#include "drivers/mesa-hostmot2/hm2_eth.h"
+#include "drivers/mesa-hostmot2/lbp16.h"
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Michael Geszkiewicz");

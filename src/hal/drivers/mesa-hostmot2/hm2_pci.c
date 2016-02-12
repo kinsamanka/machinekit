@@ -35,9 +35,9 @@
 
 #include "hal.h"
 
-#include "bitfile.h"
-#include "hostmot2-lowlevel.h"
-#include "hm2_pci.h"
+#include "drivers/mesa-hostmot2/bitfile.h"
+#include "drivers/mesa-hostmot2/hostmot2-lowlevel.h"
+#include "drivers/mesa-hostmot2/hm2_pci.h"
 
 
 MODULE_LICENSE("GPL");

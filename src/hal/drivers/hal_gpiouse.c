@@ -24,7 +24,7 @@
 #include "rtapi_app.h"
 #include "rtapi_bitops.h"
 #include "hal.h"
-#include "hal_gpiomap.h"
+#include "drivers/hal_gpiomap.h"
 
 #define MODNAME "gpiouse"
 #define DELIMITERS ",;:"

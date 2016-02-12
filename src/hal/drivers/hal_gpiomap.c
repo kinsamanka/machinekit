@@ -41,7 +41,7 @@
 #include "rtapi_app.h"
 #include "rtapi_bitops.h"
 #include "hal.h"
-#include "hal_gpiomap.h"
+#include "drivers/hal_gpiomap.h"
 
 // maps of reserved pin numbers used otherwise (eg mmc flash, HDMI etc)
 // and hence not available for HAL drivers

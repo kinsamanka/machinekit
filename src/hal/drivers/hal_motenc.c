@@ -130,7 +130,7 @@
 #include "rtapi_pci.h"
 #endif
 #include "hal.h"			// HAL public API decls.
-#include "motenc.h"			// Hardware dependent defines.
+#include "drivers/motenc.h"		// Hardware dependent defines.
 
 // Module information.
 MODULE_AUTHOR("Pete Vavaroutsos");

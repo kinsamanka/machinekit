@@ -160,7 +160,7 @@
 #include "rtapi_app.h"		/* RTAPI realtime module decls */
 #include <linux/pci.h>
 #include "hal.h"		/* HAL public API decls */
-#include "hal_vti.h"		/* VTI related defines */
+#include "drivers/hal_vti.h"	/* VTI related defines */
 
 /* module information */
 MODULE_AUTHOR("Eric Johnson");

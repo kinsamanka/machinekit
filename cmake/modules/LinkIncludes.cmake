@@ -11,12 +11,10 @@ set(H_DIRS
     libnml/posemath
     machinetalk/include
     machinetalk/msgcomponents
-    machinetalk/nanopb
     rtapi
     rtapi/rtapi_math
     rtapi/shmdrv)
 
-file(MAKE_DIRECTORY ${INCLUDE_DIR}/proto)
 file(MAKE_DIRECTORY ${INCLUDE_DIR}/nanopb)
 file(MAKE_DIRECTORY ${INCLUDE_DIR}/userpci)
 file(MAKE_DIRECTORY ${INCLUDE_DIR}/drivers/mesa-hostmot2)
