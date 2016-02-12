@@ -650,6 +650,8 @@ int rtapi_get_tags(const char *mod_name)
     char modpath[PATH_MAX];
     int result = 0, n = 0;
     char *cp1 = "";
+    struct stat st;
+    char *s;
 
     flavor_ptr flavor = default_flavor();
 
@@ -664,11 +666,21 @@ int rtapi_get_tags(const char *mod_name)
 	    return -1;
 	}
 	strcat(modpath,"/");
+	n = strlen(modpath);
 	strcat(modpath, flavor->name);
 	strcat(modpath,"/");
 	strcat(modpath,mod_name);
 	strcat(modpath, flavor->mod_ext);
     }
+
+    // check RTLIB_DIR/flavor first otherwise use RTLIB_DIR
+    if (stat(modpath, &st) != 0) {
+	// delete "flavor/" string
+	s = modpath + n;
+	n = strlen(flavor->name) + 1;
+	memmove(s,s+n,1+strlen(s+n));
+    }
+
     const char **caps = get_caps(modpath);
 
     char **p = (char **)caps;
