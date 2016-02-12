@@ -27,6 +27,7 @@
 #include "inifile.h"           /* iniFind() */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <strings.h>
 #include <sys/types.h>
@@ -290,12 +291,16 @@ void check_rtapi_config_open()
     /* Open rtapi.ini if needed.  Private function used by
        get_rtapi_config(). */
     char config_file[PATH_MAX];
+    char* cfile = getenv("RTAPI_INI");
 
     if (rtapi_inifile == NULL) {
 	/* it's the first -i (ignore repeats) */
 	/* there is a following arg, and it's not an option */
-	snprintf(config_file, PATH_MAX,
-		 "%s/rtapi.ini", EMC2_SYSTEM_CONFIG_DIR);
+	if(cfile!=NULL)
+	    strncpy(config_file, cfile, PATH_MAX);
+	else
+	    snprintf(config_file, PATH_MAX,
+		"%s/rtapi.ini", EMC2_SYSTEM_CONFIG_DIR);
 	rtapi_inifile = fopen(config_file, "r");
 	if (rtapi_inifile == NULL) {
 	    fprintf(stderr,
