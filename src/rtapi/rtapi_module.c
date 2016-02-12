@@ -28,7 +28,7 @@
 #include "config.h"		// build configuration
 #include "rtapi.h"		// these functions
 #include "rtapi_common.h"	// RTAPI macros and decls
-#include "rtapi/shmdrv/shmdrv.h"
+#include "shmdrv.h"
 
 
 #ifdef MODULE
@@ -582,4 +582,3 @@ int _rtapi_exit(int module_id) {
 
 
 #endif  /* ULAPI */
-

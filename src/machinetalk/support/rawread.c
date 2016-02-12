@@ -25,11 +25,11 @@
 #include <stdlib.h>
 #include <assert.h>
 
-#include <protobuf/pb-linuxcnc.h>
-#include <protobuf/nanopb/pb_decode.h>
-#include <protobuf/nanopb/pb_encode.h>
+#include <pb-linuxcnc.h>
+#include <nanopb/pb_decode.h>
+#include <nanopb/pb_encode.h>
 
-#include <protobuf/container.h>
+#include <container.h>
 
 
 bool print_container(pb_istream_t *stream)

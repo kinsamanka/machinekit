@@ -32,7 +32,7 @@
 
 #include "config.h"		// build configuration
 #include "rtapi.h"
-#include "rtapi/shmdrv/shmdrv.h"
+#include "shmdrv.h"
 #include "shmdrv.h"
 
 static const char *driver_name = "/dev/" DEVICE_NAME;

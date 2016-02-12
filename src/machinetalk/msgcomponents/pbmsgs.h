@@ -1,9 +1,9 @@
 #ifndef _PBMSGS_H
 #define _PBMSGS_H
 
-#include <machinetalk/include/pb-linuxcnc.h>
-#include <machinetalk/nanopb/pb_decode.h>
-#include <machinetalk/nanopb/pb_encode.h>
+#include <pb-linuxcnc.h>
+#include <nanopb/pb_decode.h>
+#include <nanopb/pb_encode.h>
 
 // the message type descriptor
 typedef struct {
@@ -27,9 +27,9 @@ typedef struct {
 #define PB_MSGINFO_DELIMITER {0, -1, NULL, 0, NULL, NULL}
 #define PB_MSGID
 
-#include <machinetalk/generated/message.npb.h>
-#include <machinetalk/generated/value.npb.h>
-#include <machinetalk/generated/test.npb.h>
+#include <message.npb.h>
+#include <value.npb.h>
+#include <test.npb.h>
 
 
 #endif // _PBMSGS_H

@@ -55,7 +55,7 @@
 using namespace std;
 
 #include <rtapi.h>
-#include <rtapi/shmdrv/shmdrv.h>
+#include <shmdrv.h>
 #include <ring.h>
 #include <setup_signals.h>
 #include <mk-backtrace.h>
@@ -65,7 +65,7 @@ using namespace std;
 #include <libwebsockets.h>  // version tags only
 
 #include <google/protobuf/text_format.h>
-#include <machinetalk/generated/message.pb.h>
+#include <message.pb.h>
 using namespace google::protobuf;
 
 

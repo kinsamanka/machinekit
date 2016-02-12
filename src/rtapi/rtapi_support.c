@@ -29,7 +29,7 @@
 
 #include "config.h"
 #include "rtapi.h"
-#include "rtapi/shmdrv/shmdrv.h"
+#include "shmdrv.h"
 #include "ring.h"
 
 #define RTPRINTBUFFERLEN 1024

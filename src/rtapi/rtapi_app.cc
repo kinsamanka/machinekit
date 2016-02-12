@@ -67,7 +67,7 @@
 #include <czmq.h>
 #include <google/protobuf/text_format.h>
 
-#include <machinetalk/generated/message.pb.h>
+#include <message.pb.h>
 #include <pbutil.hh>  // note_printf(pb::Container &c, const char *fmt, ...)
 
 using namespace google::protobuf;
@@ -78,7 +78,7 @@ using namespace google::protobuf;
 #include "rtapi_export.h"
 #include "hal.h"
 #include "hal_priv.h"
-#include "rtapi/shmdrv/shmdrv.h"
+#include "shmdrv.h"
 
 #include "mk-backtrace.h"
 #include "setup_signals.h"

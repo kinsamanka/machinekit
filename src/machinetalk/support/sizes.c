@@ -1,12 +1,12 @@
 #include <stdio.h>
-#include <emc/motion/motion.h>
-#include <emc/motion/motion_debug.h>
+#include <motion.h>
+#include <motion_debug.h>
 
-#include <machinetalk/generated/test.npb.h>
-#include <machinetalk/generated/value.npb.h>
-#include <machinetalk/generated/object.npb.h>
-#include <machinetalk/generated/message.npb.h>
-#include <machinetalk/generated/motcmds.npb.h>
+#include <test.npb.h>
+#include <value.npb.h>
+#include <object.npb.h>
+#include <message.npb.h>
+#include <motcmds.npb.h>
 
 
 int main()

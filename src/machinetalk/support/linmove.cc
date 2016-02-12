@@ -2,13 +2,14 @@
 
 #include <iostream>
 #include <string>
+#include <stdio.h>
 
 #include <google/protobuf/text_format.h>
 
-#include <machinetalk/generated/types.pb.h>
-#include <machinetalk/generated/canon.pb.h>
-#include <machinetalk/generated/emcclass.pb.h>
-#include <machinetalk/generated/message.pb.h>
+#include <types.pb.h>
+#include <canon.pb.h>
+#include <emcclass.pb.h>
+#include <message.pb.h>
 
 #include <json2pb.hh>
 

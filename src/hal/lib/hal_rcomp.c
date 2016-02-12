@@ -16,7 +16,7 @@
 #include <time.h>               /* remote comp bind/unbind/update timestamps */
 #include <limits.h>             /* PATH_MAX */
 #include <stdlib.h>		/* exit() */
-#include "rtapi/shmdrv/shmdrv.h"
+#include "shmdrv.h"
 
 int hal_bind(const char *comp_name)
 {

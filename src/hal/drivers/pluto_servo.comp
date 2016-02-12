@@ -187,7 +187,7 @@ modparam int test_encoder = 0
 
 license "GPL";
 
-include "hal/drivers/pluto_common.h";
+include "drivers/pluto_common.h";
 ;;
 
 
@@ -317,7 +317,7 @@ FUNCTION(ppread) {
     EPP_DIR_WRITE();
 }
 
-#include "hal/drivers/pluto_servo_rbf.h"
+#include "pluto_servo_rbf.h"
 
 EXTRA_SETUP() {
     return pluto_setup(firmware);

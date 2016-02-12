@@ -24,7 +24,7 @@
 #include <hal_group.h>
 #include <hal_rcomp.h>
 #include <hal_ring.h>
-#include <machinetalk/generated/message.pb.h>
+#include <message.pb.h>
 
 // in halpb.cc:
 int halpr_describe_signal(hal_sig_t *sig, pb::Signal *pbsig);
@@ -165,5 +165,3 @@ static inline int hal_pbsig2u(const pb::Signal *s, hal_data_u *vp)
     }
     return 0;
 }
-
-

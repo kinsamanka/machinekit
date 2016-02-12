@@ -51,7 +51,7 @@
 #include "mk-service.hh"
 #include "mk-zeroconf.hh"
 
-#include <machinetalk/generated/message.pb.h>
+#include <message.pb.h>
 namespace gpb = google::protobuf;
 
 // announced protocol versions

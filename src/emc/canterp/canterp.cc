@@ -55,9 +55,9 @@
 #include <limits.h>
 #include <algorithm>
 #include "config.h"
-#include "emc/nml_intf/interp_return.hh"
-#include "emc/nml_intf/canon.hh"
-#include "emc/rs274ngc/interp_base.hh"
+#include "interp_return.hh"
+#include "canon.hh"
+#include "interp_base.hh"
 #include "modal_state.hh"
 
 static char the_command[LINELEN] = { 0 };	// our current command

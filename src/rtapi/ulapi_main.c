@@ -31,7 +31,7 @@
 #include "rtapi_global.h"       /* global_data_t */
 #include "rtapi_common.h"
 #include "rtapi_compat.h"
-#include "rtapi/shmdrv/shmdrv.h"
+#include "shmdrv.h"
 
 #include <fcntl.h>
 #include <sys/stat.h>

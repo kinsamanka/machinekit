@@ -85,7 +85,7 @@ MODULE_LICENSE("GPL");
 #include <time.h>               /* remote comp bind/unbind/update timestamps */
 #include <limits.h>             /* PATH_MAX */
 #include <stdlib.h>		/* exit() */
-#include "rtapi/shmdrv/shmdrv.h"
+#include "shmdrv.h"
 #endif
 
 char *hal_shmem_base = 0;

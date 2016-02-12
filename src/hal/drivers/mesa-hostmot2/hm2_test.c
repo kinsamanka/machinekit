@@ -30,7 +30,7 @@
 #if defined(USERMODE_PCI) && defined(BUILD_SYS_USER_DSO)
 #include <sys/io.h>
 #include <rtapi.h>
-#include <rtapi/rtapi_pci.h>
+#include <rtapi_pci.h>
 #else
 #include <linux/pci.h>
 #endif
@@ -602,4 +602,3 @@ void rtapi_app_exit(void) {
     LL_PRINT("driver unloaded\n");
     hal_exit(comp_id);
 }
-

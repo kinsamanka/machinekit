@@ -18,12 +18,12 @@
 #include <errno.h>
 #include <stdarg.h>
 
-#include <machinetalk/include/pb-linuxcnc.h>
-#include <machinetalk/nanopb/pb_encode.h>
+#include <pb-linuxcnc.h>
+#include <nanopb/pb_encode.h>
 
-#include <machinetalk/generated/types.npb.h>
-#include <machinetalk/generated/value.npb.h>
-#include <machinetalk/generated/rtapi_message.npb.h>
+#include <types.npb.h>
+#include <value.npb.h>
+#include <rtapi_message.npb.h>
 #include "rtapi.h"
 
 #define MIN(a,b) ((a)<(b)?(a):(b))

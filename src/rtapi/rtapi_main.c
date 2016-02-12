@@ -38,7 +38,7 @@
 #include "rtapi_app.h"		/* RTAPI realtime module decls */
 #include "rtapi_common.h"       /* global_data_t */
 #include "rtapi_compat.h"       /* global_data_t */
-#include "rtapi/shmdrv/shmdrv.h"  /* common shm driver API */
+#include "shmdrv.h"  /* common shm driver API */
 
 MODULE_AUTHOR("Michael Haberler");
 MODULE_DESCRIPTION("RTAPI module support - userland threads");

@@ -10,11 +10,11 @@ extern "C"
 #include <assert.h>
 #endif
 
-#include <libnml/nml/nml_type.hh> // NMLTYPE
+#include <nml_type.hh> // NMLTYPE
 
 // need to get at enum ContainerType and some tags
 #if defined(GOOGLE_PROTOBUF_VERSION)
-#include <protobuf/generated/types.pb.h>
+#include <types.pb.h>
 
 #define MSGTYPE          pb::ContainerType
 #define EMCMOT_LOWER     pb::MT_EMCMOT_LOWER
@@ -24,7 +24,7 @@ extern "C"
 #define CONTAINER        pb::Container
 
 #elif defined(PROTOBUF_C_MAJOR)
-#include <protobuf/generated/types.pb-c.h>
+#include <types.pb-c.h>
 
 #define MSGTYPE          _Pb__ContainerType
 #define EMCMOT_LOWER     MSG_TYPE__MT_EMCMOT_LOWER
@@ -34,8 +34,8 @@ extern "C"
 #define CONTAINER        _Container
 
 #elif defined(NANOPB_VERSION)
-#include <machinetalk/generated/types.npb.h>
-#include <machinetalk/generated/message.npb.h>
+#include <types.npb.h>
+#include <message.npb.h>
 #define MSGTYPE          pb_ContainerType
 #define EMCMOT_LOWER     pb_ContainerType_MT_EMCMOT_LOWER
 #define EMCMOT_UPPER     pb_ContainerType_MT_EMCMOT_UPPER

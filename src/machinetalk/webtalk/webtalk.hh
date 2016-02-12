@@ -69,7 +69,7 @@ enum wt_log_levels {
 #include "mk-service.hh"
 #include "mk-zeroconf.hh"
 
-#include <machinetalk/generated/message.pb.h>
+#include <message.pb.h>
 namespace gpb = google::protobuf;
 
 #include <json2pb.hh>
