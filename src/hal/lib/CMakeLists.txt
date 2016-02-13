@@ -36,14 +36,4 @@ add_library(mkhal SHARED ${HALLIBSRCS} hal_iter.c halpb.cc
     $<TARGET_OBJECTS:rtapi_support> $<TARGET_OBJECTS:rtapi_heap>)
 target_link_libraries(mkhal mk-pb2++ ${CMAKE_DL_LIBS} rt)
 
-add_library(_hal SHARED halmodule.cc)
-set_property(TARGET _hal APPEND PROPERTY 
-    INCLUDE_DIRECTORIES ${PYTHON_INCLUDE_DIRS})
-set_target_properties(_hal PROPERTIES 
-    LIBRARY_OUTPUT_DIRECTORY ${PROJECT_PYTHON_DIR}
-    PREFIX "")
-target_link_libraries(_hal ${PYTHON_LIBRARIES})
-
-# fixme
-# set_property(GLOBAL APPEND PROPERTY target-py _hal)
 _install(mkhal)
