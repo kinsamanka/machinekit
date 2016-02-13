@@ -3,6 +3,14 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_PYTHON_DIR}/machinekit)
 
 set(CY_SRC hal rtapi compat shmcommon)
 
+set(sdir ${CMAKE_SOURCE_DIR}/lib/python/machinekit)
+set(deps ${sdir}/halfile.py ${sdir}/launcher.py ${sdir}/service.py)
+set(stamp ${CMAKE_CURRENT_BINARY_DIR}/timestamp)
+add_custom_command(OUTPUT ${stamp}
+    COMMAND ${CMAKE_COMMAND} -E touch ${stamp}
+    COMMAND cp ${deps} ${PROJECT_PYTHON_DIR}/machinekit/
+    DEPENDS ${deps})
+
 set(init ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/__init__.py)
 
 add_custom_command(OUTPUT ${init}
@@ -13,7 +21,7 @@ foreach(file ${CY_SRC})
     add_custom_command(
         OUTPUT  ${PWD}/${file}.c
         COMMAND ${CYTHON} -o ${PWD}/${file}.c ${file}.pyx
-        DEPENDS ${file}.pyx ${file}.pxd ${init}
+        DEPENDS ${file}.pyx ${file}.pxd ${init} ${stamp}
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
         COMMENT "Generate C files from ${file}.pyx")
 endforeach()
