@@ -78,9 +78,12 @@ add_subdirectory(hal)
 add_subdirectory(emc)
 
 add_dependencies(rtapi_app pb_gen_files)
-add_dependencies(pbring npb_gen_files)
-add_dependencies(pbmsgs npb_gen_files)
-add_dependencies(ringload npb_gen_files)
+foreach(_flav ${BUILD_THREAD_FLAVORS})
+    _flavor_helper(${_flav})
+    add_dependencies(pbring~${_fname} npb_gen_files)
+    add_dependencies(pbmsgs~${_fname} npb_gen_files)
+    add_dependencies(ringload~${_fname} npb_gen_files)
+endforeach()
 
 # create needed directories
 file(MAKE_DIRECTORY ${PROJECT_MAN_DIR}/man1)

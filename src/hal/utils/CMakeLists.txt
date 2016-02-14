@@ -53,7 +53,6 @@ set_property(TARGET halscope APPEND PROPERTY
 target_link_libraries(halscope mkhal rtapi_math ${GTK2_LIBRARIES})
 
 _to_rtlib(scope_rt scope_rt.c)
-_install_exec(scope_rt)
 
 # fixme
 # set_property(GLOBAL APPEND PROPERTY target-dev pyhal_utils)

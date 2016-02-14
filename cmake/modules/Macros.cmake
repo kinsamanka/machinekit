@@ -129,18 +129,25 @@ endmacro()
 # \arg:CFLAGS Optional, additional flags
 #
 macro(_to_rtlib NAME SRCS)
-    set(_cflags -UULAPI)
-    if(${ARGV1})
-        set(_cflags -UULAPI ${ARGV1})
-    endif()
-    add_library(${NAME} SHARED ${SRCS})
-    set_target_properties(${NAME} PROPERTIES 
-        COMPILE_DEFINITIONS "RTAPI;THREAD_FLAVOR_ID=0"
-        COMPILE_FLAGS ${_cflags}
-        LIBRARY_OUTPUT_DIRECTORY ${PROJECT_LIBEXEC_DIR}
-        OUTPUT_NAME ${NAME}
-        PREFIX "")
-    set(target-exec ${target-exec} ${NAME})
+    foreach(_flav ${BUILD_THREAD_FLAVORS})
+        _flavor_helper(${_flav})
+
+        set(_cflags -UULAPI)
+        if(${ARGV1})
+            set(_cflags -UULAPI ${ARGV1})
+        endif()
+        add_library(${NAME}~${_fname} SHARED ${SRCS})
+        set_target_properties(${NAME}~${_fname} PROPERTIES 
+            COMPILE_DEFINITIONS "RTAPI;THREAD_FLAVOR_ID=0"
+            COMPILE_FLAGS ${_cflags}
+            LIBRARY_OUTPUT_DIRECTORY ${PROJECT_LIBEXEC_DIR}/${_fname}
+            OUTPUT_NAME ${NAME}
+            PREFIX "")
+        # set(target-exec ${target-exec} ${NAME}_${_fname}_)
+        set(_lib_dest lib/machinekit/${_fname})
+        install(TARGETS ${NAME}~${_fname}
+            LIBRARY DESTINATION ${_lib_dest})
+    endforeach()
 endmacro()
 
 macro(_install SRC)
@@ -157,6 +164,17 @@ macro(_install_exec SRC)
     install(TARGETS ${SRC} 
     	DESTINATION lib/machinekit
         LIBRARY DESTINATION ${_lib_dest})
+endmacro()
+
+macro(_install_exec_flavor SRC)
+    foreach(_flav ${BUILD_THREAD_FLAVORS})
+        _flavor_helper(${_flav})
+
+        set(_lib_dest lib/machinekit/${_fname})
+        install(TARGETS ${SRC}_${_fname}_
+        	DESTINATION lib/machinekit
+            LIBRARY DESTINATION ${_lib_dest})
+        endforeach()
 endmacro()
 
 macro(_install_exec_setuid SRC)

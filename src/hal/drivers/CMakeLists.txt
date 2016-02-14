@@ -43,8 +43,12 @@ foreach(file ${_gen_c})
     _to_rtlib(${name} ${file})
 endforeach()
 
-add_dependencies(pluto_servo pluto_servo_rbf)
-add_dependencies(pluto_step pluto_step_rbf)
+foreach(_flav ${BUILD_THREAD_FLAVORS})
+    _flavor_helper(${_flav})
+
+    add_dependencies(pluto_servo~${_fname} pluto_servo_rbf)
+    add_dependencies(pluto_step~${_fname} pluto_step_rbf)
+endforeach()
 
 unset(_gen_man)
 # create manpages
