@@ -18,7 +18,6 @@ set(HALLIBSRCS
 
 foreach(_flav ${BUILD_THREAD_FLAVORS})
     _flavor_helper(${_flav})
-
     add_library(hal_lib_${_fname} SHARED ${HALLIBSRCS} 
         $<TARGET_OBJECTS:rtapi_heap>)
     set_target_properties(hal_lib_${_fname} PROPERTIES 

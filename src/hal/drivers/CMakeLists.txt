@@ -45,9 +45,8 @@ endforeach()
 
 foreach(_flav ${BUILD_THREAD_FLAVORS})
     _flavor_helper(${_flav})
-
-    add_dependencies(pluto_servo~${_fname} pluto_servo_rbf)
-    add_dependencies(pluto_step~${_fname} pluto_step_rbf)
+    add_dependencies(pluto_servo.${_fname} pluto_servo_rbf)
+    add_dependencies(pluto_step.${_fname} pluto_step_rbf)
 endforeach()
 
 unset(_gen_man)

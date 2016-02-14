@@ -80,9 +80,9 @@ add_subdirectory(emc)
 add_dependencies(rtapi_app pb_gen_files)
 foreach(_flav ${BUILD_THREAD_FLAVORS})
     _flavor_helper(${_flav})
-    add_dependencies(pbring~${_fname} npb_gen_files)
-    add_dependencies(pbmsgs~${_fname} npb_gen_files)
-    add_dependencies(ringload~${_fname} npb_gen_files)
+    add_dependencies(pbring.${_fname} npb_gen_files)
+    add_dependencies(pbmsgs.${_fname} npb_gen_files)
+    add_dependencies(ringload.${_fname} npb_gen_files)
 endforeach()
 
 # create needed directories

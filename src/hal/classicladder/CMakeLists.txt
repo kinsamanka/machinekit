@@ -49,8 +49,7 @@ target_link_libraries(classicladder mkhal ${GTK2_LIBRARIES})
 
 foreach(_flav ${BUILD_THREAD_FLAVORS})
     _flavor_helper(${_flav})
-
-    set_property(TARGET classicladder_rt~${_fname} classicladder APPEND PROPERTY
+    set_property(TARGET classicladder_rt.${_fname} classicladder APPEND PROPERTY
         COMPILE_DEFINITIONS SEQUENTIAL_SUPPORT HAL_SUPPORT DYNAMIC_PLCSIZE
             RT_SUPPORT OLD_TIMERS_MONOS_SUPPORT MODBUS_IO_MASTER)
 endforeach()

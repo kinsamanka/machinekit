@@ -77,7 +77,6 @@ endif()
 
 foreach(_flav ${BUILD_THREAD_FLAVORS})
     _flavor_helper(${_flav})
-
     add_library(ulapi-${_fname} SHARED ${XXAPI_COMMON_SRCS}
         ulapi_main.c ${${_FLAV}_THREADS_SOURCE}
         $<TARGET_OBJECTS:rtapi_heap> $<TARGET_OBJECTS:rtapi_support>)
