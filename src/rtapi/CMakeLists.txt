@@ -53,28 +53,6 @@ if(WITH_USERMODE_PCI)
     endif()
 endif()
 
-# this is a hack to allow RUN_IN_PLACE on the build directory
-file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/mk_rip.c "")
-add_library(mk_rip SHARED ${CMAKE_CURRENT_BINARY_DIR}/mk_rip.c)
-set_target_properties(mk_rip PROPERTIES 
-    LIBRARY_OUTPUT_DIRECTORY ${PROJECT_LIBEXEC_DIR}
-    OUTPUT_NAME mk_rip)
-foreach(_flav ${BUILD_THREAD_FLAVORS})
-    _flavor_helper(${_flav})
-    add_library(mk_rip-${_fname} SHARED ${CMAKE_CURRENT_BINARY_DIR}/mk_rip.c)
-    set_target_properties(mk_rip-${_fname} PROPERTIES 
-        LIBRARY_OUTPUT_DIRECTORY ${PROJECT_LIBEXEC_DIR}/${_fname}
-        OUTPUT_NAME mk_rip-${_fname})
-    _install_exec(mk_rip-${_fname} ${_fname})
-endforeach()
-
-# set the RPATH for installed binaries, but only if it's not a system directory
-set(_rpath "${CMAKE_INSTALL_PREFIX}/lib/machinekit")
-list(FIND CMAKE_PLATFORM_IMPLICIT_LINK_DIRECTORIES "${CMAKE_INSTALL_PREFIX}/lib" _res)
-if("${_res}" STREQUAL "-1")
-   set(_rpath  ${_rpath} "${CMAKE_INSTALL_PREFIX}/lib")
-endif()
-
 foreach(_flav ${BUILD_THREAD_FLAVORS})
     _flavor_helper(${_flav})
     add_library(ulapi-${_fname} SHARED ${XXAPI_COMMON_SRCS}
@@ -117,7 +95,7 @@ foreach(_flav ${BUILD_THREAD_FLAVORS})
         COMPILE_FLAGS -UULAPI
         RUNTIME_OUTPUT_DIRECTORY ${PROJECT_LIBEXEC_DIR})
     target_link_libraries(rtapi_app_${_fname} mkini mkshm mtalk rtapi_math 
-        mk-pb2++ ${CMAKE_DL_LIBS} mk_rip mk_rip-${_fname})
+        mk-pb2++ ${CMAKE_DL_LIBS} mk_rip mk_rip.${_fname})
     if(${_flav} STREQUAL xenomai)
         set_target_properties(rtapi_app_${_fname} PROPERTIES 
             LINK_FLAGS ${XENO_LDFLAGS})
@@ -127,7 +105,7 @@ foreach(_flav ${BUILD_THREAD_FLAVORS})
 
     _install_exec(rtapi_${_fname} ${_fname})
     _install_exec_setuid(rtapi_app_${_fname})
-    set(target-exec ${target-exec} ulapi-${_fname})
+    _install_exec(ulapi-${_fname})
 endforeach()
 
 add_custom_target(setuid 
@@ -141,5 +119,4 @@ install(FILES rsyslogd-machinekit.conf
     DESTINATION ${INSTALL_SYSCONF_DIR}/rsyslog.d
     RENAME machinekit.conf)
 
-set(target-exec ${target-exec} rtapi_msgd flavor mk_rip)
-_install_exec("${target-exec}")
+_install_exec("rtapi_msgd;flavor")

@@ -27,6 +27,7 @@ set(XENOMAI_THREADS_SOURCE xenomai.c)
 
 # create and populate include dir
 include(LinkIncludes)
+include(RpathHack)
 
 include_directories(${INCLUDE_DIR})
 include_directories(${INCLUDE_DIR}/proto)
