@@ -1,7 +1,7 @@
 foreach(tool nanopb_generator.py protoc-gen-nanopb)
     add_custom_command(
         OUTPUT ${PROJECT_PYTHON_DIR}/${tool} 
-        COMMAND cmake -E copy 
+        COMMAND ${CMAKE_COMMAND} -E copy 
             ${CMAKE_CURRENT_SOURCE_DIR}/generator/${tool}
             ${PROJECT_PYTHON_DIR}/${tool}
         DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/generator/${tool})

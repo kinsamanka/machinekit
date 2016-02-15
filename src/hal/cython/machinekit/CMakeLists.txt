@@ -19,7 +19,6 @@ add_custom_command(OUTPUT ${stamp}
     DEPENDS ${deps})
 
 set(init ${PROJECT_PYTHON_DIR}/machinekit/__init__.py)
-
 add_custom_command(OUTPUT ${init}
     COMMAND ${CMAKE_COMMAND} -E touch ${init}
     COMMAND ${CMAKE_COMMAND} -E touch __init__.py)

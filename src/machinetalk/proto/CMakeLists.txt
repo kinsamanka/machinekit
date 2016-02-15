@@ -39,8 +39,8 @@ foreach(file ${MK_PROTO_SRC})
     add_custom_command(
         OUTPUT  ${PB_GEN_DIR}/${out}
         COMMAND ${PROTOC} ${PB_GEN_OPTS} proto/${file}.proto
-        COMMAND cmake -E remove -f ${INCLUDE_DIR}/${file}.pb.h
-        COMMAND cmake -E create_symlink 
+        COMMAND ${CMAKE_COMMAND} -E remove -f ${INCLUDE_DIR}/${file}.pb.h
+        COMMAND ${CMAKE_COMMAND} -E create_symlink 
             ${PB_GEN_DIR}/${file}.pb.h 
             ${INCLUDE_DIR}/${file}.pb.h
         DEPENDS proto/${file}.proto
@@ -79,8 +79,8 @@ foreach(file ${MK_PROTO_SRC})
     add_custom_command(
         OUTPUT  ${PB_GEN_DIR}/${out}
         COMMAND ${PROTOC} ${NPB_GEN_OPTS} proto/${file}.proto
-        COMMAND cmake -E remove -f ${INCLUDE_DIR}/${file}.npb.h
-        COMMAND cmake -E create_symlink 
+        COMMAND ${CMAKE_COMMAND} -E remove -f ${INCLUDE_DIR}/${file}.npb.h
+        COMMAND ${CMAKE_COMMAND} -E create_symlink 
             ${PB_GEN_DIR}/${file}.npb.h 
             ${INCLUDE_DIR}/${file}.npb.h
         DEPENDS proto/${file}.proto protoc-gen-nanopb 
