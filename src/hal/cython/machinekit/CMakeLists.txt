@@ -1,5 +1,5 @@
 include_directories(${PYTHON_INCLUDE_DIRS})
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_PYTHON_DIR}/machinekit)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
 
 set(CY_SRC hal rtapi compat shmcommon)
 
@@ -9,12 +9,14 @@ set(stamp ${CMAKE_CURRENT_BINARY_DIR}/timestamp)
 add_custom_command(OUTPUT ${stamp}
     COMMAND ${CMAKE_COMMAND} -E touch ${stamp}
     COMMAND cp ${deps} ${PROJECT_PYTHON_DIR}/machinekit/
+    COMMAND cp ${deps} ${CMAKE_CURRENT_BINARY_DIR}/
     DEPENDS ${deps})
 
-set(init ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/__init__.py)
+set(init ${PROJECT_PYTHON_DIR}/machinekit/__init__.py)
 
 add_custom_command(OUTPUT ${init}
-  COMMAND ${CMAKE_COMMAND} -E touch ${init})
+    COMMAND ${CMAKE_COMMAND} -E touch ${init}
+    COMMAND ${CMAKE_COMMAND} -E touch __init__.py)
 
 set(PWD ${CMAKE_CURRENT_BINARY_DIR})
 foreach(file ${CY_SRC})
@@ -49,4 +51,19 @@ set_target_properties(cy_shmcommon PROPERTIES
     OUTPUT_NAME "shmcommon"
     PREFIX "")
 
- 
+# copy files to local python dir
+add_custom_target(mk_cy ALL
+    COMMAND cp $<TARGET_FILE:cy_hal> $<TARGET_FILE:cy_rtapi> 
+        $<TARGET_FILE:cy_compat> $<TARGET_FILE:cy_shmcommon>
+        ${PROJECT_PYTHON_DIR}/machinekit
+    DEPENDS cy_hal cy_rtapi cy_compat cy_shmcommon)
+
+configure_file("config.py.in" "${PROJECT_PYTHON_DIR}/machinekit/config.py" @ONLY)
+
+# create files for installation
+set(PROJECT_SYSCONF_DIR "${INSTALL_SYSCONF_DIR}")
+set(PROJECT_LIBEXEC_DIR "${CMAKE_INSTALL_PREFIX}/lib/machinekit")
+set(PROJECT_BINARY_DIR "${CMAKE_INSTALL_PREFIX}")
+set(PROJECT_BIN_DIR "${CMAKE_INSTALL_PREFIX}/bin")
+
+configure_file("config.py.in" "config.py" @ONLY)
