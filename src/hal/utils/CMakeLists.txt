@@ -8,7 +8,11 @@ set(HALCMD_SRCS
 add_library(halcmd_rtapiapp OBJECT halcmd_rtapiapp.cc)
 
 add_executable(halcmd ${HALCMD_SRCS})
-target_link_libraries(halcmd mkini mkhal mk-pb2++ mtalk rtapi_math readline)
+target_link_libraries(halcmd mkini mkhal mk-pb2++ mtalk rtapi_math readline mk_rip)
+set_target_properties(halcmd PROPERTIES
+    BUILD_WITH_INSTALL_RPATH FALSE
+    INSTALL_RPATH "${_rpath}"
+    INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 add_executable(pci_write pci_write.c upci.c)
 add_executable(pci_read pci_read.c upci.c)
