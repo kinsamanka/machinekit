@@ -3,14 +3,17 @@ import os,time,sys
 
 from nose import with_setup
 from machinekit.nosetests.realtime import setup_module,teardown_module
-from machinekit import rtapi,hal
+from machinekit import rtapi,hal,config
 
 import ConfigParser
 
 def test_rtapi_connect():
     global uuid, rt
     cfg = ConfigParser.ConfigParser()
-    cfg.read(os.getenv("MACHINEKIT_INI"))
+    mkini = os.getenv("MACHINEKIT_INI")
+    if mkini is None:
+        mkini = config.Config().MACHINEKIT_INI
+    cfg.read(mkini)
     uuid = cfg.get("MACHINEKIT", "MKUUID")
     rt = rtapi.RTAPIcommand(uuid=uuid)
 

@@ -7,7 +7,7 @@ from nose import with_setup
 from machinekit.nosetests.realtime import setup_module ,teardown_module
 
 from machinekit import rtapi
-from machinekit import hal
+from machinekit import hal,config
 
 if sys.version_info >= (3, 0):
     import configparser
@@ -22,7 +22,10 @@ rt = None
 def test_get_uuid():
     global uuid, rt
     cfg = configparser.ConfigParser()
-    cfg.read(os.getenv("MACHINEKIT_INI"))
+    mkini = os.getenv("MACHINEKIT_INI")
+    if mkini is None:
+        mkini = config.Config().MACHINEKIT_INI
+    cfg.read(mkini)
     uuid = cfg.get("MACHINEKIT", "MKUUID")
 
 

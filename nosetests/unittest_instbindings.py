@@ -8,12 +8,15 @@ from machinekit.nosetests.support import fnear
 from unittest import TestCase
 import time,os,ConfigParser
 
-from machinekit import rtapi,hal
+from machinekit import rtapi,hal,config
 
 class TestIinst(TestCase):
     def setUp(self):
         self.cfg = ConfigParser.ConfigParser()
-        self.cfg.read(os.getenv("MACHINEKIT_INI"))
+        mkini = os.getenv("MACHINEKIT_INI")
+        if mkini is None:
+            mkini = config.Config().MACHINEKIT_INI
+        self.cfg.read(mkini)
         self.uuid = self.cfg.get("MACHINEKIT", "MKUUID")
         rt = rtapi.RTAPIcommand(uuid=self.uuid)
 
